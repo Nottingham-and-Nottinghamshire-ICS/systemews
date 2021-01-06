@@ -36,6 +36,7 @@ app_ui <- function(request) {
         mainPanel(
           tabsetPanel(id = "tabsetID",
                       tabPanel(value = "forecastDetail",
+                               "Forecast",
                                mod_build_forecast_ui("build_forecast_ui_1")
                       )
                       # ,

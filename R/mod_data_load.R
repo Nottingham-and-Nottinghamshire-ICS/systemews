@@ -30,8 +30,6 @@ mod_data_load_server <- function(id){
       
       load("data_store/open_data.rda")
       
-      cat(str(input))
-      
       open_data %>% 
         dplyr::mutate(weekend = dplyr::case_when(
           lubridate::wday(Date) %in% c(1, 7) ~ "Weekend",
