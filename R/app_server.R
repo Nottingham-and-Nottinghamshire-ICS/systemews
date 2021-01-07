@@ -24,8 +24,8 @@ app_server <- function( input, output, session ) {
   output$dateRangeInput <- renderUI({
     
     dateRangeInput("dateRange", "Date range",
-                   start = as.Date("2020-03-01"),
-                   end = as.Date("2020-07-01"))
+                   start = as.Date("2020-04-01"),
+                   end = max(all_data()$Date))
   })
   
   # load data and filter by date
@@ -33,9 +33,14 @@ app_server <- function( input, output, session ) {
   all_data <- mod_data_load_server("data_load_ui_1")
   
   filter_data <- reactive({
+    
+    req(input$dateRange)
+    
     all_data() %>% 
       dplyr::filter(Date >= input$dateRange[1], Date <= input$dateRange[2])
   })
   
-  mod_build_forecast_server("build_forecast_ui_1", data = filter_data)
+  mod_build_forecast_server("build_forecast_ui_1", 
+                            data = filter_data,
+                            variable = reactive(input$variableSelector))
 }

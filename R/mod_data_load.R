@@ -36,7 +36,6 @@ mod_data_load_server <- function(id){
           TRUE ~ "Weekday"
         )) %>% 
         dplyr::mutate(day_of_week = lubridate::wday(Date, label = TRUE))
-        
     })
   })
 }

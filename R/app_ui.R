@@ -17,8 +17,6 @@ app_ui <- function(request) {
           
           uiOutput("dateRangeInput"),
           
-          selectInput("ci", "Select 80/95% CIs", choices = c("80%" = "80", "95%" = "95")),
-          
           uiOutput("variableSelectorUI"),
           
           selectInput("spcFacet", "Divide SPC by:",
