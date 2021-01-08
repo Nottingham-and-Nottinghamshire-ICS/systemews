@@ -73,3 +73,37 @@ plot_fitted <- function(input_data, model, variable_name, h){
     dygraphs::dyRangeSelector(dateWindow = c(max(time(fitted_xts)) - 30,
                                              max(time(fitted_xts))))
 }
+
+# TBATS TSCV function
+
+tbats_cv <- function(x, h){
+  
+  fit <- forecast::tbats(x)
+  fc <- forecast::forecast(fit, h = h)
+  return(fc)
+}
+
+# return accuracy of model
+
+return_accuracy <- function(input_data, model, variable_name, h){
+  
+  input_data <- input_data %>% 
+    tsibble::tsibble(index = Date)
+  
+  series <- forecast::msts(input_data %>%
+                             dplyr::pull({{variable_name}}),
+                           seasonal.periods = c(7, 365.25),
+                           start = c(lubridate::year(min(input_data$Date)), 
+                                     lubridate::yday(min(input_data$Date))))
+  
+  e <- forecast::tsCV(series, forecastfunction = tbats_cv, h = 10,
+            window = nrow(input_data) - 10)
+  
+  # Compute the MSE values and remove missing values
+  
+  # Plot the MSE values against the forecast horizon
+  
+  mae <- colMeans(abs(e), na.rm = TRUE)
+  
+  return(mae[h])
+}

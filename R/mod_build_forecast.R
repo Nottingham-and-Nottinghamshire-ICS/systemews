@@ -15,8 +15,8 @@ mod_build_forecast_ui <- function(id){
     
     sliderInput(ns("h_step_forecast"),
                 "Accuracy graph/ calculation forecast horizon",
-                min = 1, max = 30,
-                value = 1),
+                min = 1, max = 10,
+                value = 3),
     
     textOutput(ns("accuracyText")),
     
@@ -63,5 +63,26 @@ mod_build_forecast_server <- function(id, data, variable){
                   variable_name = variable(), 
                   h = input$h_step_forecast)
     })
+    
+    output$accuracyText <- renderText({
+      
+      accuracy_value <- return_accuracy(input_data = data(),
+                      model = the_model(),
+                      variable_name = variable(),
+                      h = input$h_step_forecast)
+      
+      return(
+        paste0("Mean cross validated forecast accuracy at ",
+               input$h_step_forecast, " day forecast horizon is ",
+               round(accuracy_value, 2), 
+               " patients per day")
+      )
+    })
+    
+    # return model
+    
+    reactive(
+      the_model()
+    )
   })
 }
