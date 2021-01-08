@@ -19,11 +19,6 @@ app_ui <- function(request) {
           
           uiOutput("variableSelectorUI"),
           
-          selectInput("spcFacet", "Divide SPC by:",
-                      choices = c("No division" = "none",
-                                  "Weekday/ weekend" = "weekend",
-                                  "Day of week" = "day_of_week")),
-          
           p("Select your variable and date range and then click calculate."),
           p("Each time you make changes you will need to click calculate"),
           
@@ -36,17 +31,20 @@ app_ui <- function(request) {
                       tabPanel(value = "forecastDetail",
                                "Forecast",
                                mod_build_forecast_ui("build_forecast_ui_1")
+                      ),
+                      
+                      tabPanel(value = "spc",
+                               "SPC",
+                               mod_spc_ui("spc_ui_1")),
+
+                      tabPanel(value = "decomposition",
+                               "Decomposition",
+                               mod_decomposition_ui("decomposition_ui_1")
+                      ),
+                    tabPanel(value = "residuals",
+                             "Residual check",
+                             mod_residuals_ui("residuals_ui_1")
                       )
-                      # ,
-                      # tabPanel(value = "spc",
-                      #          # spc module
-                      # ),
-                      # tabPanel(
-                      #   # decomposition module
-                      # ),
-                      # tabPanel(
-                      #   # residual module
-                      # )
           )
         )
       )

@@ -40,7 +40,27 @@ app_server <- function( input, output, session ) {
       dplyr::filter(Date >= input$dateRange[1], Date <= input$dateRange[2])
   })
   
-  mod_build_forecast_server("build_forecast_ui_1", 
+  # run forecast module
+  
+  final_model <- mod_build_forecast_server("build_forecast_ui_1", 
                             data = filter_data,
                             variable = reactive(input$variableSelector))
+  
+  # run spc module
+  
+  mod_spc_server("spc_ui_1", data = filter_data,
+                 variable = reactive(input$variableSelector))
+  
+  # run decomposition module
+  
+  mod_decomposition_server("decomposition_ui_1", 
+                           data = filter_data,
+                           variable = reactive(input$variableSelector))
+  
+  # residual module
+  
+  mod_residuals_server("residuals_ui_1",
+                       data = filter_data,
+                       variable = reactive(input$variableSelector),
+                       model = final_model)
 }
