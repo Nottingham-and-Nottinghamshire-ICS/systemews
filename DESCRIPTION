@@ -24,7 +24,12 @@ Imports:
     qicharts2,
     fabletools,
     feasts,
-    pkgload
+    pkgload,
+    ggplot2,
+    lubridate,
+    rlang,
+    tsibble,
+    xts
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
