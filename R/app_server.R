@@ -30,7 +30,7 @@ app_server <- function( input, output, session ) {
   
   # load data and filter by date
   
-  all_data <- mod_data_load_server("data_load_ui_1", use_data = open_data)
+  all_data <- mod_data_load_server("data_load_ui_1")
   
   filter_data <- reactive({
     

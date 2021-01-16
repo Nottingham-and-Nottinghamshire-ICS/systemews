@@ -18,7 +18,7 @@ mod_data_load_ui <- function(id){
 #' data_load Server Functions
 #'
 #' @noRd 
-mod_data_load_server <- function(id, use_data){
+mod_data_load_server <- function(id){
   moduleServer( id, function(input, output, session){
     ns <- session$ns
     
@@ -30,7 +30,7 @@ mod_data_load_server <- function(id, use_data){
       
       # load(...) load your data here
       
-      use_data %>% 
+      open_data %>% 
         dplyr::mutate(weekend = dplyr::case_when(
           lubridate::wday(Date) %in% c(1, 7) ~ "Weekend",
           TRUE ~ "Weekday"
