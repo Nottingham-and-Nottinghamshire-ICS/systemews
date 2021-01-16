@@ -28,7 +28,7 @@ mod_data_load_server <- function(id){
     
     reactive({
       
-      load("data_store/open_data.rda")
+      # load(...) load your data here
       
       open_data %>% 
         dplyr::mutate(weekend = dplyr::case_when(
